@@ -82,8 +82,10 @@ def get_categories(cookies, secondaries):
             for category in categories:
                 if category["href"].startswith('/b/'):
                     category_links.append(base_url + category["href"])
+                    category["href"] = category["href"].split('?')[0]
                     print(base_url + category["href"])
-        return category_links
+        unique_list = list(set(category_links))
+        return unique_list
     except Exception as e:
         print(e)
     
