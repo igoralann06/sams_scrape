@@ -4,6 +4,7 @@ import xlwt
 import os
 from datetime import datetime
 import imghdr
+from fake_useragent import UserAgent
 
 base_url = "https://www.samsclub.com"
 products = []
@@ -31,8 +32,9 @@ def get_cookies():
 
 def get_departments(cookies):
     global base_url
+    ua = UserAgent()
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+        'User-Agent': ua.random
     }
     try:
         response = requests.get(base_url + "/c?xid=hdr:shop:moredepartments", headers=headers, cookies=cookies)
