@@ -6,6 +6,7 @@ import xlwt
 
 import requests
 import time
+import imghdr
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
