@@ -31,8 +31,8 @@ class CustomWebDriver(WebDriver):
         # options.add_experimental_option("useAutomationExtension", False)
         # options.add_experimental_option("excludeSwitches", ["enable-automation"])
         # print(options)
-        # if headless:
-        #     options.add_argument("--headless=new")
+        if headless:
+            options.add_argument("--headless=new")
         if is_none:
             options.page_load_strategy = "none"
         if is_eager:
