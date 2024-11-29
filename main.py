@@ -89,7 +89,7 @@ def get_categories(cookies, secondaries):
                     print(base_url + category["href"])
                 else:
                     secondary_links.append(base_url + category["href"])
-        return unique_list, secondary_links
+        return secondary_links
     except Exception as e:
         print(e)
     
@@ -130,10 +130,8 @@ if __name__ == '__main__':
     print(cookies)
     departments = get_departments(cookies)
     secondaries = get_secondaries(cookies, departments)
-    categories, other_secondaries = get_categories(cookies, secondaries)
-    other_categories = get_categories(cookies, other_secondaries)
-    print(categories)
-    print(other_categories)
+    other_secondaries = get_categories(cookies, secondaries)
+    temp_secondaries = get_categories(cookies, other_secondaries)
     
     
     
