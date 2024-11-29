@@ -77,6 +77,7 @@ def get_categories(cookies, secondaries):
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
         }
         category_links = []
+        secondary_links = []
         for secondary in secondaries:
             response = requests.get(secondary, headers=headers, cookies=cookies)
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -86,8 +87,9 @@ def get_categories(cookies, secondaries):
                     category_links.append(base_url + category["href"])
                     category["href"] = category["href"].split('?')[0]
                     print(base_url + category["href"])
-        unique_list = list(set(category_links))
-        return unique_list
+                else:
+                    secondary_links.append(base_url + category["href"])
+        return unique_list, secondary_links
     except Exception as e:
         print(e)
     
@@ -128,10 +130,10 @@ if __name__ == '__main__':
     print(cookies)
     departments = get_departments(cookies)
     secondaries = get_secondaries(cookies, departments)
-    categories = get_categories(cookies, secondaries)
-    with open("stores1.txt", "w") as file:
-        for item in categories:
-            file.write(f"{item}\n")
+    categories, other_secondaries = get_categories(cookies, secondaries)
+    other_categories = get_categories(cookies, other_secondaries)
+    print(categories)
+    print(other_categories)
     
     
     
