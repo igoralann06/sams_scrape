@@ -129,8 +129,9 @@ if __name__ == '__main__':
     departments = get_departments(cookies)
     secondaries = get_secondaries(cookies, departments)
     categories = get_categories(cookies, secondaries)
-    
-    print(categories)
+    with open("stores1.txt", "w") as file:
+        for item in categories:
+            file.write(f"{item}\n")
     
     
     
