@@ -131,7 +131,8 @@ if __name__ == '__main__':
     departments = get_departments(cookies)
     secondaries = get_secondaries(cookies, departments)
     other_secondaries = get_categories(cookies, secondaries)
-    temp_secondaries = get_categories(cookies, other_secondaries)
+    secondaries1 = get_categories(cookies, other_secondaries)
+    secondaries2 = get_categories(cookies, secondaries1)
     
     
     
