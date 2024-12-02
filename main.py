@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 base_url = "https://www.samsclub.com"
 products = []
 section_id = 1
+all_categories = []
 
 def get_departments(driver):
     global base_url
@@ -47,7 +48,7 @@ def get_secondaries(driver, departments):
         print(e)
         
 def get_categories(driver, secondaries):
-    global base_url
+    global base_url, all_categories
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
@@ -61,6 +62,7 @@ def get_categories(driver, secondaries):
                 if category.get_dom_attribute("href").startswith('/b/'):
                     category_links.append(base_url + category.get_dom_attribute("href"))
                     href = category.get_dom_attribute("href").split('?')[0]
+                    all_categories.append(base_url + href)
                     print(base_url + href)
                 elif category.get_dom_attribute("href").startswith('/c/'):
                     secondary_links.append(base_url + category.get_dom_attribute("href"))
@@ -79,6 +81,10 @@ if __name__ == '__main__':
     if other_secondaries is not None:
         secondaries1 = get_categories(driver, other_secondaries)
     
+    unique_list = list(set(category.strip() for category in all_categories))
+    with open("stores.txt", "w") as file:
+        for item in unique_list:
+            file.write(f"{item}\n")
     
     
     
