@@ -9,7 +9,7 @@ with open("stores2.txt", "w") as file:
     for item in unique_list:
         file.write(f"{item}\n")
 
-print("Duplicates removed and updated in stores.txt!")
+print("Duplicates removed and updated in stores2.txt!")
 
 
 
@@ -24,4 +24,4 @@ with open("stores3.txt", "w") as file:
     for item in unique_list:
         file.write(f"{item}\n")
 
-print("Duplicates removed and updated in stores.txt!")
+print("Duplicates removed and updated in stores3.txt!")
