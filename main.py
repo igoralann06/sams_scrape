@@ -13,10 +13,6 @@ section_id = 1
 
 def get_departments(driver):
     global base_url
-    ua = UserAgent()
-    headers = {
-        'User-Agent': ua.random
-    }
     try:
         response = driver.get(base_url + "/c?xid=hdr:shop:moredepartments")
         # with open('index.html', 'w', encoding='utf-8') as file:
