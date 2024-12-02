@@ -14,16 +14,16 @@ section_id = 1
 def get_departments(driver):
     global base_url
     try:
-        response = driver.get(base_url + "/c?xid=hdr:shop:moredepartments")
+        driver.get(base_url + "/c?xid=hdr:shop:moredepartments")
         # with open('index.html', 'w', encoding='utf-8') as file:
         #     file.write(response.text)
-        links = driver.find_elements(By.CLASS_NAME, "bst-link bst-link-small bst-link-primary")
+        links = driver.find_elements(By.CLASS_NAME, "bst-link-primary")
         # links = soup.find_all('a', class_="bst-link bst-link-small bst-link-primary")
         departments = []
         for link in links:
-            if link.get_attribute("href").startswith('/c/'):
-                departments.append(base_url + link.get_attribute("href"))
-                print(link.get_attribute("href"))
+            if link.get_dom_attribute("href").startswith('/c/'):
+                departments.append(base_url + link.get_dom_attribute("href"))
+                print(link.get_dom_attribute("href"))
         return departments
     except Exception as e:
         print(e)
@@ -36,12 +36,12 @@ def get_secondaries(driver, departments):
         }
         secondary_links = []
         for department in departments:
-            driver.get(department, headers=headers, cookies=cookies)
-            secondaries = driver.find_elements(By.CLASS_NAME, "bst-link bst-link-small bst-link-primary")
+            driver.get(department)
+            secondaries = driver.find_elements(By.CLASS_NAME, "bst-link-primary")
             for secondary in secondaries:
-                if secondary.get_attribute("href").startswith('/c/'):
-                    secondary_links.append(base_url + secondary.get_attribute("href"))
-                    print(base_url + secondary.get_attribute("href"))
+                if secondary.get_dom_attribute("href").startswith('/c/'):
+                    secondary_links.append(base_url + secondary.get_dom_attribute("href"))
+                    print(base_url + secondary.get_dom_attribute("href"))
         return secondary_links
     except Exception as e:
         print(e)
@@ -55,15 +55,15 @@ def get_categories(driver, secondaries):
         category_links = []
         secondary_links = []
         for secondary in secondaries:
-            response = driver.get(secondary, headers=headers, cookies=cookies)
-            categories = driver.find_elements(By.CLASS_NAME, "bst-link bst-link-small bst-link-primary")
+            response = driver.get(secondary)
+            categories = driver.find_elements(By.CLASS_NAME, "bst-link-primary")
             for category in categories:
-                if category.get_attribute("href").startswith('/b/'):
-                    category_links.append(base_url + category.get_attribute("href"))
-                    href = category.get_attribute("href").split('?')[0]
+                if category.get_dom_attribute("href").startswith('/b/'):
+                    category_links.append(base_url + category.get_dom_attribute("href"))
+                    href = category.get_dom_attribute("href").split('?')[0]
                     print(base_url + href)
-                elif category.get_attribute("href").startswith('/c/'):
-                    secondary_links.append(base_url + category.get_attribute("href"))
+                elif category.get_dom_attribute("href").startswith('/c/'):
+                    secondary_links.append(base_url + category.get_dom_attribute("href"))
         return secondary_links
     except Exception as e:
         print(e)
@@ -71,7 +71,7 @@ def get_categories(driver, secondaries):
 
 # Step 3: Main function
 if __name__ == '__main__':
-    driver = CustomWebDriver(is_eager=True)
+    driver = CustomWebDriver()
 
     departments = get_departments(driver)
     secondaries = get_secondaries(driver, departments)
