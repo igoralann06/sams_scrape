@@ -87,7 +87,7 @@ def get_categories(cookies, secondaries):
                     category_links.append(base_url + category["href"])
                     category["href"] = category["href"].split('?')[0]
                     print(base_url + category["href"])
-                else:
+                elif category["href"].startswith('/c/'):
                     secondary_links.append(base_url + category["href"])
         return secondary_links
     except Exception as e:
