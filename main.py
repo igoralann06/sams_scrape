@@ -100,7 +100,6 @@ if __name__ == '__main__':
     departments = get_departments(cookies)
     secondaries = get_secondaries(cookies, departments)
     other_secondaries = get_categories(cookies, secondaries)
-    print(len(other_secondaries))
     secondaries1 = get_categories(cookies, other_secondaries)
     
     
