@@ -132,9 +132,6 @@ if __name__ == '__main__':
     other_secondaries = get_categories(cookies, secondaries)
     print(len(other_secondaries))
     secondaries1 = get_categories(cookies, other_secondaries)
-    print(len(secondaries1))
-    secondaries2 = get_categories(cookies, other_secondaries)
-    print(len(secondaries2))
     
     
     
