@@ -96,36 +96,6 @@ def get_categories(cookies, secondaries):
 
 # Step 3: Main function
 if __name__ == '__main__':
-    # Scrape the product data
-    # titleData = ["id","Store page link", "Product item page link", "Store_name", "Category", "Product_description", "Product Name", "Weight/Quantity", "Units/Counts", "Price", "image_file_names", "Image_Link", "Store Rating", "Store Review number", "Product Rating", "Product Review number", "Address", "Phone number", "Latitude", "Longitude", "Description Detail", "Nutrition & Info", "Halal Certification"]
-    # widths = [10,50,50,60,45,70,35,25,25,20,130,130,30,30,30,30,60,50,60,60,80,80,80]
-    # style = xlwt.easyxf('font: bold 1; align: horiz center')
-    # products = []
-
-    # if(not os.path.isdir("products")):
-    #     os.mkdir("products")
-
-    # now = datetime.now()
-    # current_time = now.strftime("%m-%d-%Y-%H-%M-%S")
-    # prefix = now.strftime("%Y%m%d%H%M%S%f_")
-    # os.mkdir("products/"+current_time)
-    # os.mkdir("products/"+current_time+"/images")
-    
-    
-    # workbook = xlwt.Workbook()
-    # sheet = workbook.add_sheet('Sheet1')
-
-    # for col_index, value in enumerate(titleData):
-    #     first_col = sheet.col(col_index)
-    #     first_col.width = 256 * widths[col_index]  # 20 characters wide
-    #     sheet.write(0, col_index, value, style)
-        
-    # for row_index, row in enumerate(records):
-    #     for col_index, value in enumerate(row):
-    #         sheet.write(row_index+1, col_index, value)
-
-    # # Save the workbook
-    # workbook.save("products/"+current_time+"/products.xls")
     cookies = get_cookies()
     departments = get_departments(cookies)
     secondaries = get_secondaries(cookies, departments)
