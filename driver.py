@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 class CustomWebDriver(WebDriver):
     def __init__(
-        self, headless=True, is_eager=False, disable_images=False, is_none=False
+        self, headless=False, is_eager=False, disable_images=False, is_none=False
     ):
         options = Options()
         options.add_argument("--no-sandbox")
