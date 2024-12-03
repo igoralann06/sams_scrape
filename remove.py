@@ -13,7 +13,7 @@
 
 
 
-with open("stores.txt", "r") as file:
+with open("stores5.txt", "r") as file:
     lines = file.readlines()
 
 # Step 2: Remove duplicates and strip whitespace/newline characters
