@@ -24,7 +24,6 @@ def get_departments(driver):
         for link in links:
             if link.get_dom_attribute("href").startswith('/c/'):
                 departments.append(base_url + link.get_dom_attribute("href"))
-                print(link.get_dom_attribute("href"))
         return departments
     except Exception as e:
         print(e)
@@ -42,7 +41,6 @@ def get_secondaries(driver, departments):
             for secondary in secondaries:
                 if secondary.get_dom_attribute("href").startswith('/c/'):
                     secondary_links.append(base_url + secondary.get_dom_attribute("href"))
-                    print(base_url + secondary.get_dom_attribute("href"))
         return secondary_links
     except Exception as e:
         print(e)
@@ -62,7 +60,9 @@ def get_categories(driver, secondaries):
                 if category.get_dom_attribute("href").startswith('/b/'):
                     category_links.append(base_url + category.get_dom_attribute("href"))
                     href = category.get_dom_attribute("href").split('?')[0]
-                    all_categories.append(base_url + href)
+                    full_url = base_url + href
+                    if(full_url not in all_categories):
+                        all_categories.append(base_url + href)
                     print(base_url + href)
                 elif category.get_dom_attribute("href").startswith('/c/'):
                     secondary_links.append(base_url + category.get_dom_attribute("href"))
@@ -78,8 +78,6 @@ if __name__ == '__main__':
     departments = get_departments(driver)
     secondaries = get_secondaries(driver, departments)
     other_secondaries = get_categories(driver, secondaries)
-    if other_secondaries is not None:
-        secondaries1 = get_categories(driver, other_secondaries)
     
     unique_list = list(set(category.strip() for category in all_categories))
     with open("stores.txt", "w") as file:
