@@ -78,6 +78,8 @@ if __name__ == '__main__':
     departments = get_departments(driver)
     secondaries = get_secondaries(driver, departments)
     other_secondaries = get_categories(driver, secondaries)
+    if(other_secondaries is not None):
+        get_categories(driver, other_secondaries)
     
     unique_list = list(set(category.strip() for category in all_categories))
     with open("stores.txt", "w") as file:
