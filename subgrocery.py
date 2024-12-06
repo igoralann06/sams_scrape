@@ -164,8 +164,8 @@ if __name__ == "__main__":
     os.mkdir("products/"+current_time)
     os.mkdir("products/"+current_time+"/images")
     
-    if(os.path.isfile("grocery_stores.txt")):
-        with open('grocery_stores.txt', 'r') as file:
+    if(os.path.isfile("subgrocery_stores.txt")):
+        with open("subgrocery_stores.txt", 'r') as file:
             lines = file.readlines()
             for line in lines:
                 cleaned_text = re.sub(r'\n', '', line)
@@ -183,6 +183,35 @@ if __name__ == "__main__":
 
         # print(events)
         records = scrap_address_and_image(driver, store_url)
+
+        keys = [
+            "id",
+            "store_link",
+            "product_link",
+            "store_name",
+            "category",
+            "subcategory",
+            "title",
+            "description",
+            "extra_details",
+            "price",
+            "download_url",
+            "image_url",
+            "availability",
+            "discount",
+            "rating",
+            "rating_count",
+            "store_address",
+            "store_phone",
+            "latitude",
+            "longitude",
+            "details",
+        ]
+
+        records_dict = [dict(zip(keys, record)) for record in records]
+        records_json = json.dumps(records_dict, indent=2)
+        with open("grocery.json", "w", encoding="utf-8") as file:
+            file.write(records_json)
         
     for row_index, row in enumerate(records):
         for col_index, value in enumerate(row):
