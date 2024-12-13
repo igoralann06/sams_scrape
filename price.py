@@ -14,6 +14,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
+from selenium.webdriver.chrome.options import Options
 
 from driver import CustomWebDriver
 
@@ -29,7 +30,7 @@ def scrap_address_and_image(driver, product_url):
 
     driver.get(product_url)
     
-    time.sleep(1)
+    time.sleep(3)
     price = ""
 
     try:
@@ -55,6 +56,13 @@ def scrap_address_and_image(driver, product_url):
 
 if __name__ == "__main__":
     # driver = CustomWebDriver(is_eager=True)
+    options = Options()
+    options.add_argument("--headless=new")  # Optional
+    options.add_argument("start-maximized")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
     driver = uc.Chrome()
     titleData = ["id", "Product item page link", "Price"]
     product_urls = []
