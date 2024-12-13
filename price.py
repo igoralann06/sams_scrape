@@ -63,7 +63,7 @@ if __name__ == "__main__":
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
-    driver = uc.Chrome()
+    driver = uc.Chrome(options=options)
     titleData = ["id", "Product item page link", "Price"]
     product_urls = []
     widths = [10,150,50]
