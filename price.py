@@ -27,10 +27,13 @@ def scrap_address_and_image(driver, product_url):
     cookies = driver.get_cookies()
     for cookie in cookies:
         driver.add_cookie(cookie)
-
+    
     driver.get(product_url)
     
-    time.sleep(3)
+    if(section_id == 1):
+        time.sleep(60)
+    else:
+        time.sleep(random.randint(3,5))
     price = ""
 
     try:
@@ -49,6 +52,8 @@ def scrap_address_and_image(driver, product_url):
     
     products.append(record)
     print(record)
+    with open('prices.txt', 'a') as file:
+        file.write(price + '\n')
     section_id = section_id + 1
 
     return products
@@ -56,54 +61,54 @@ def scrap_address_and_image(driver, product_url):
 
 if __name__ == "__main__":
     # driver = CustomWebDriver(is_eager=True)
-    options = Options()
-    options.add_argument("--headless=new")  # Optional
-    options.add_argument("start-maximized")
-    options.add_argument("--disable-extensions")
+    options = uc.ChromeOptions()
+    # options.add_argument("--headless=new")  # Enable headless mode
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-software-rasterizer")
+    options.add_argument("--start-maximized")  # Debugging support
     driver = uc.Chrome(options=options)
     titleData = ["id", "Product item page link", "Price"]
     product_urls = []
     widths = [10,150,50]
     style = xlwt.easyxf('font: bold 1; align: horiz center')
 
-    if(not os.path.isdir("products")):
-        os.mkdir("products")
+    if(not os.path.isdir("no_prices")):
+        os.mkdir("no_prices")
 
     now = datetime.now()
     current_time = now.strftime("%m-%d-%Y-%H-%M-%S")
     prefix = now.strftime("%Y%m%d%H%M%S%f_")
-    os.mkdir("products/"+current_time)
-    os.mkdir("products/"+current_time+"/images")
+    os.mkdir("no_prices/"+current_time)
+    # os.mkdir("no_prices/"+current_time+"/images")
     
-    if(os.path.isfile("no-price.txt")):
-        with open('no-price.txt', 'r') as file:
+    if(os.path.isfile("no-price1.txt")):
+        with open('no-price1.txt', 'r') as file:
             lines = file.readlines()
             for line in lines:
                 cleaned_text = re.sub(r'\n', '', line)
                 product_urls.append(cleaned_text)
 
     for product_url in product_urls:
-
-        workbook = xlwt.Workbook()
-        sheet = workbook.add_sheet('Sheet1')
-        
-        for col_index, value in enumerate(titleData):
-            first_col = sheet.col(col_index)
-            first_col.width = 256 * widths[col_index]  # 20 characters wide
-            sheet.write(0, col_index, value, style)
-
         # print(events)
         records = scrap_address_and_image(driver, product_url)
+    
+    workbook = xlwt.Workbook()
+    sheet = workbook.add_sheet('Sheet1')
+
+    for col_index, value in enumerate(titleData):
+        first_col = sheet.col(col_index)
+        first_col.width = 256 * widths[col_index]
+        sheet.write(0, col_index, value, style)
         
     for row_index, row in enumerate(records):
         for col_index, value in enumerate(row):
             sheet.write(row_index+1, col_index, value)
 
     # Save the workbook
-    workbook.save("products/"+current_time+"/products.xls")
+    workbook.save("no_prices/"+current_time+"/products.xls")
 
     driver.quit()
 
